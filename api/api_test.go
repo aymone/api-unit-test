@@ -25,6 +25,16 @@ func TestAuth(t *testing.T) {
 	})
 }
 
+type AuthServiceMock struct {
+	AuthInvoked bool
+	AuthFn      func(token string) bool
+}
+
+func (s *AuthServiceMock) Auth(token string) bool {
+	s.AuthInvoked = true
+	return s.AuthFn(token)
+}
+
 func TestMainHandler(t *testing.T) {
 	t.Run("success", func(t *testing.T) {
 		accessTokenHeader := "password"
@@ -37,10 +47,21 @@ func TestMainHandler(t *testing.T) {
 
 		responseWriterMock := httptest.NewRecorder()
 
-		handler := api.Handler{
-			AuthService: &api.AuthService{},
+		mockedService := AuthServiceMock{
+			AuthFn: func(token string) bool {
+				return true
+			},
 		}
+
+		handler := api.Handler{
+			AuthService: &mockedService,
+		}
+
 		handler.MainHandler(responseWriterMock, request)
+
+		if !mockedService.AuthInvoked {
+			t.Error("authServiceMock was expected to be called")
+		}
 
 		expectedCode := http.StatusOK
 		if expectedCode != responseWriterMock.Code {
@@ -64,10 +85,21 @@ func TestMainHandler(t *testing.T) {
 
 		responseWriterMock := httptest.NewRecorder()
 
-		handler := api.Handler{
-			AuthService: &api.AuthService{},
+		mockedService := AuthServiceMock{
+			AuthFn: func(token string) bool {
+				return false
+			},
 		}
+
+		handler := api.Handler{
+			AuthService: &mockedService,
+		}
+
 		handler.MainHandler(responseWriterMock, request)
+
+		if !mockedService.AuthInvoked {
+			t.Error("authServiceMock was expected to be called")
+		}
 
 		expectedCode := http.StatusForbidden
 		if expectedCode != responseWriterMock.Code {
