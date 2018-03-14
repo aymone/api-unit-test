@@ -5,11 +5,20 @@ import (
 	"net/http"
 )
 
+// Auth ...
+func Auth(token string) bool {
+	if token == "password" {
+		return true
+	}
+
+	return false
+}
+
 // MainHandler ...
 func MainHandler(w http.ResponseWriter, r *http.Request) {
 	accessToken := r.Header.Get("X-Access-Token")
-	if accessToken == "password" {
-		fmt.Fprint(w, "authenticated with success.\n")
+	if Auth(accessToken) {
+		fmt.Fprint(w, "authenticated with success.")
 		return
 	}
 

@@ -9,6 +9,20 @@ import (
 	"github.com/aymone/api-unit-test/api"
 )
 
+func TestAuth(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		if !api.Auth("password") {
+			t.Error("authService expected to be true")
+		}
+	})
+
+	t.Run("fail", func(t *testing.T) {
+		if api.Auth("") {
+			t.Error("authService expected to be false")
+		}
+	})
+}
+
 func TestMainHandler(t *testing.T) {
 	t.Run("success", func(t *testing.T) {
 		accessTokenHeader := "password"
@@ -27,7 +41,7 @@ func TestMainHandler(t *testing.T) {
 			t.Errorf("status code didn't match: \n\t%q\n\t%q", expectedCode, responseWriterMock.Code)
 		}
 
-		expectedBody := []byte("authenticated with success.\n")
+		expectedBody := []byte("authenticated with success.")
 		if !bytes.Equal(expectedBody, responseWriterMock.Body.Bytes()) {
 			t.Errorf("status code didn't match: \n\t%q\n\t%q", expectedBody, responseWriterMock.Body.String())
 		}
