@@ -6,7 +6,10 @@ import (
 )
 
 // Auth ...
-func Auth(token string) bool {
+type AuthService struct{}
+
+// Auth ...
+func (s *AuthService) Auth(token string) bool {
 	if token == "password" {
 		return true
 	}
@@ -15,9 +18,10 @@ func Auth(token string) bool {
 }
 
 // MainHandler ...
-func MainHandler(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) MainHandler(w http.ResponseWriter, r *http.Request) {
 	accessToken := r.Header.Get("X-Access-Token")
-	if Auth(accessToken) {
+
+	if h.AuthService.Auth(accessToken) {
 		fmt.Fprint(w, "authenticated with success.")
 		return
 	}
