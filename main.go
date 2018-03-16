@@ -1,19 +1,13 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
+
+	"github.com/aymone/api-unit-test/api"
 )
 
 func main() {
-	http.HandleFunc("/api", func(w http.ResponseWriter, r *http.Request) {
-		accessToken := r.Header.Get("X-Access-Token")
-		if accessToken == "password" {
-			fmt.Fprint(w, "authenticated with success.\n")
-		} else {
-			http.Error(w, "you don't have access.", http.StatusForbidden)
-		}
-	})
+	http.HandleFunc("/api", api.MainHandler)
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
