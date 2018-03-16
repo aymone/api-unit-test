@@ -46,4 +46,27 @@ func TestMainHandler(t *testing.T) {
 			t.Errorf("status code didn't match: \n\t%q\n\t%q", expectedBody, responseWriterMock.Body.String())
 		}
 	})
+
+	t.Run("fail", func(t *testing.T) {
+		accessTokenHeader := ""
+
+		request, err := http.NewRequest("GET", "/api", nil)
+		if err != nil {
+			t.Fatalf("index request error: %s", err)
+		}
+		request.Header.Set("X-Access-Token", accessTokenHeader)
+
+		responseWriterMock := httptest.NewRecorder()
+		api.MainHandler(responseWriterMock, request)
+
+		expectedCode := http.StatusForbidden
+		if expectedCode != responseWriterMock.Code {
+			t.Errorf("status code didn't match: \n\t%q\n\t%q", expectedCode, responseWriterMock.Code)
+		}
+
+		expectedBody := []byte("you don't have access.\n")
+		if !bytes.Equal(expectedBody, responseWriterMock.Body.Bytes()) {
+			t.Errorf("status code didn't match: \n\t%q\n\t%q", expectedBody, responseWriterMock.Body.String())
+		}
+	})
 }
