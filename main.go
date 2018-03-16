@@ -8,6 +8,5 @@ import (
 )
 
 func main() {
-	http.HandleFunc("/api", api.MainHandler)
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Fatal(http.ListenAndServe(":8080", api.Router()))
 }

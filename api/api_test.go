@@ -11,13 +11,15 @@ import (
 
 func TestAuth(t *testing.T) {
 	t.Run("success", func(t *testing.T) {
-		if !api.Auth("password") {
+		auth := &api.AuthService{}
+		if !auth.Auth("password") {
 			t.Error("authService expected to be true")
 		}
 	})
 
 	t.Run("fail", func(t *testing.T) {
-		if api.Auth("") {
+		auth := &api.AuthService{}
+		if auth.Auth("") {
 			t.Error("authService expected to be false")
 		}
 	})
@@ -34,7 +36,11 @@ func TestMainHandler(t *testing.T) {
 		request.Header.Set("X-Access-Token", accessTokenHeader)
 
 		responseWriterMock := httptest.NewRecorder()
-		api.MainHandler(responseWriterMock, request)
+
+		handler := api.Handler{
+			AuthService: &api.AuthService{},
+		}
+		handler.MainHandler(responseWriterMock, request)
 
 		expectedCode := http.StatusOK
 		if expectedCode != responseWriterMock.Code {
@@ -57,7 +63,11 @@ func TestMainHandler(t *testing.T) {
 		request.Header.Set("X-Access-Token", accessTokenHeader)
 
 		responseWriterMock := httptest.NewRecorder()
-		api.MainHandler(responseWriterMock, request)
+
+		handler := api.Handler{
+			AuthService: &api.AuthService{},
+		}
+		handler.MainHandler(responseWriterMock, request)
 
 		expectedCode := http.StatusForbidden
 		if expectedCode != responseWriterMock.Code {
