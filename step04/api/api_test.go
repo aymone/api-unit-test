@@ -6,7 +6,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/aymone/api-unit-test/step05/api"
+	"github.com/aymone/api-unit-test/step04/api"
 )
 
 func TestAuth(t *testing.T) {
