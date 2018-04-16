@@ -7,8 +7,12 @@ language: go
 go:
   - 1.10.x
 
+services:
+  - docker
+
 before_install:
-  - make deps
+  - go get -t ./...
+  - docker-compose up -d
 
 before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
@@ -16,7 +20,7 @@ before_script:
   - ./cc-test-reporter before-build
 
 script:
-  - go test -coverprofile c.out ./...
+  - go test -tags=acceptance -coverprofile c.out ./...
 
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT

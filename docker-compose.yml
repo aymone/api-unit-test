@@ -1,0 +1,8 @@
+mongodb:
+  container_name: mongodb
+  image: mongo:3.4.10-jessie
+  environment:
+    - MONGO_DATA_DIR=/data/db
+    - MONGO_LOG_DIR=/dev/null
+  ports:
+    - "27017:27017"
