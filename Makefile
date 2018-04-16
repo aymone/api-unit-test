@@ -6,9 +6,9 @@ deps:
 test:
 	go test -v -cover ./...
 
-.PHONY: cover
-cover:
-	go test -v -cover ./...
+.PHONY: coverall
+coverall:
+	go test -tags=acceptance -coverprofile c.out ./...
 
 .PHONY: up
 up:
