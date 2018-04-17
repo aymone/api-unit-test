@@ -61,4 +61,4 @@ view cover html (xdg-open browser default)
 
 [Go 1.10+](https://golang.org/dl/)
 
-[go Dep] (https://golang.github.io/dep/)
+[go dep] (https://golang.github.io/dep/)

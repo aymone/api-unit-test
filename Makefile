@@ -1,7 +1,13 @@
 .PHONY: build
 build:
+<<<<<<< cf9e8d565f377374338c854334ed88a95f8ab65f
 	dep ensure
 	docker-compose build
+=======
+	docker-compose build
+	go get -t ./...
+	go get golang.org/x/tools/cmd/cover
+>>>>>>> update makefile and readme with some tools
 
 .PHONY: start
 start:
