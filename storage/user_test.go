@@ -11,7 +11,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestUser(t *testing.T) {
+func TestUserStorage(t *testing.T) {
 	session, err := storage.NewSession()
 	assert.NoError(t, err)
 
