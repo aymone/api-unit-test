@@ -1,0 +1,6 @@
+# go cover files
+*.out
+*.html
+
+# dep
+/vendor

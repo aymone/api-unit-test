@@ -11,7 +11,9 @@ services:
   - docker
 
 before_install:
-  - go get -t ./...
+  - curl -L -s https://github.com/golang/dep/releases/download/v0.3.1/dep-linux-amd64 -o $GOPATH/bin/dep
+  - chmod +x $GOPATH/bin/dep
+  - dep ensure
   - docker-compose up -d
 
 before_script:
@@ -20,7 +22,7 @@ before_script:
   - ./cc-test-reporter before-build
 
 script:
-  - go test -tags=acceptance -coverprofile c.out ./...
+  - go test -v -tags="unit integration acceptance" -coverprofile c.out ./...
 
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
