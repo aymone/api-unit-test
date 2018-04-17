@@ -1,6 +1,9 @@
 # go cover files
 *.out
 *.html
+<<<<<<< 2f18b0ff3609203f84d924777bdab13d2ec7e226
 
 # dep
 /vendor
+=======
+>>>>>>> Update gitignore with cover files
