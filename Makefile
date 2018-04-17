@@ -1,8 +1,7 @@
 .PHONY: build
 build:
+	dep ensure
 	docker-compose build
-	go get -t ./...
-	go get golang.org/x/tools/cmd/cover
 
 .PHONY: start
 start:

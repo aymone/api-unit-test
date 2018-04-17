@@ -60,3 +60,5 @@ view cover html (xdg-open browser default)
 [Docker compose](https://docs.docker.com/compose/)
 
 [Go 1.10+](https://golang.org/dl/)
+
+[Go dep](https://golang.github.io/dep/)
