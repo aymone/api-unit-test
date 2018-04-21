@@ -66,3 +66,8 @@ view cover html (xdg-open browser default)
 [Go 1.10+](https://golang.org/dl/)
 
 [go dep](https://golang.github.io/dep/)
+
+### Slides da talk no TDC 2018, trilha GOLANG
+https://www.slideshare.net/MarceloAymone/testando-apis-de-forma-unitria-mocando-as-dependncias
+
+:D
